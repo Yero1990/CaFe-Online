@@ -1,0 +1,3 @@
+# the following file extensions are excluded remotely
+# one may add other extensions if necessary
+*.root
