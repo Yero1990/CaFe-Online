@@ -67,7 +67,7 @@ def calc_eepX_kin():
     Mr = particle_dict['n']    # recoil system mass
 
     #Initial parameter kinematics [GeV]
-    Ei = 11.  #beam energy
+    Ei = 10.6  #beam energy
     
     #output file to write kinematics
     fname = 'CaFe_kin_summary_Eb%.2f.txt' % (Ei)
@@ -93,6 +93,15 @@ def calc_eepX_kin():
     ofile.write('#! Pr[f,0]/ \t  xbj[f,1]/ \t kf[f,2]/ \t th_e[f,3]/ \t Pf[f,4]/ \t th_p[f,5]/ \t q[f,6]/ \t th_q[f,7]/ \t th_nq[f,8]/ \t th_pq[f,9]/ \t Q2[f,10]/\n')
 
 
+    # ===================================
+    #  Dien' Notes (Starting values):
+
+    # Q2 = 2.1
+    # x = 1.2
+    # th_e = 8.2 deg
+    # pE = 9.67 GeV/c
+    # Pr: 140 - 500 MeV/c
+    # ===================================
     
     #Set Q2 Range to cover [GeV^2]
     Q2_min = 2.1
