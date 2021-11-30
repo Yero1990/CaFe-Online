@@ -51,12 +51,6 @@ def calc_eepX_kin():
     MN = 0.939565  #neutron
     MD = 1.875612  #deuteron
     me = 0.000511  #electron
-
-    # cross-check
-    print(MP, particle_dict['1H'])
-    print(MN, particle_dict['n'])
-    print(MD, particle_dict['2H'])
-    print(me, particle_dict['e'])
     
 
 
@@ -106,19 +100,19 @@ def calc_eepX_kin():
     #Set Q2 Range to cover [GeV^2]
     Q2_min = 2.1
     Q2_step = 0.01    
-    Q2_max = 2.11 + Q2_step   #include endpoint (+Pr_step)
+    Q2_max = 2.1 + Q2_step   #include endpoint (+Pr_step)
     Q2_range = np.arange(Q2_min, Q2_max, Q2_step)
     
     #Set Missing Momentum Range to cover [GeV]
-    Pr_min = 0.145
+    Pr_min = 0.140
     Pr_step = 0.01    
     Pr_max = 0.5 + Pr_step   #include endpoint (+Pr_step)
     Pr_range = np.arange(Pr_min, Pr_max, Pr_step)
     
     #Set x-Bjorken Range to cover
-    xbj_min = 0.975
+    xbj_min = 1.2
     xbj_step = 0.001
-    xbj_max = 1. + xbj_step
+    xbj_max = 1.2 + xbj_step
     xbj_range = np.arange(xbj_min, xbj_max, xbj_step)
     
     #Loop over 4-Momentum Transfer Q^2
