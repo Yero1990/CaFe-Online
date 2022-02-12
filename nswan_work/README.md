@@ -21,8 +21,9 @@ To successfully carry out this study plan, we will need to have installed the fo
 
 NOTE: C++ should already be part of the system.
  
-Reading Material:
-[SIMC Intro](https://hallcweb.jlab.org/DocDB/0008/000866/002/hallc_mc_overview_v2.pdf) by D. Gaskell
+Reading Material: <br>
+[SIMC Intro](https://hallcweb.jlab.org/DocDB/0008/000866/002/hallc_mc_overview_v2.pdf) by D. Gaskell <br>
+[General Hall C 12 GeV Analysis Procedure](https://hallcweb.jlab.org/DocDB/0010/001032/001/analysis_notes.pdf) by C. Yero
 
 ## Overview of Tasks/Meetings and Timeline
 Noah will be assigned several tasks on a weekly basis to be completed by the end of each week, and we'll meet at the start of the following week to discuss the progress made and new tasks to be completed. The entire study plan will last 10 weeks (can be flexible, depending on difficulty of tasks), after which Noah will have the necessary tools to be able to carry out and analyze the upcoming CaFe experiment in Hall C (June 8-15, 2022) <br>
@@ -76,7 +77,7 @@ and familiarize with the relevant root leaf variables
 * discuss/clarify any questions from work done on previous week
 
 * Noah will start writing code (with help from Carlos) for CaFe rate estimations using deuteron (SRC kinematics) and Carbon-12 (Mean-Field or MF kinematics). Although this code may have already been written previously, it is a good exercise to do as it will give a more comprehensive understanding of concepts such as beam charge, time, currents, yields, rates etc. 
-as well as the idea of 'weighted' events, and many more finer technical details that could be easily missed.
+as well as the idea of 'weighted' events, and many more finer technical details that could be easily missed if one does not explicitly write the code.
 
 
 `Third Week:  Feb 28 - Mar 04, 2022` <br>
@@ -101,7 +102,7 @@ estimates should start to be calculated.
 
 * discuss/clarify any questions from work done on previous week.
 * Start to get familiarized with `hallc_replay` infrastructure (there are many technical details and this task is expected to extend beyond the study plan)
-* Try to do a sucessful replay of existing data (you will need `hcana` to also be compiled)
+* Try to do a successful replay of existing data (you will need `hcana` to also be compiled)
 
 `Sixth Week:  Mar 21 - Mar 25, 2022` <br>
 
