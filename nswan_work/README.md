@@ -54,7 +54,7 @@ Meeting Link (in case one of us can't attend in person): <br>
 
 * discuss the study plan, timeline and expectations
 
-* Discuss current knowledge of students on Python, GitHub and Machine Learning
+* Discuss current knowledge of student on C++, Python, GitHub and LaTeX
 
 * install and setup (if not done already):
 	*  ROOT, GitHub, Python and LaTeX if necessary <br> 
