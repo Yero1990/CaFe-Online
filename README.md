@@ -1,5 +1,4 @@
 # CaFe-Online
----
 
 For information on the Hall C CaFe Experiment, please see the CaFe Wiki:
 [Hall C Wiki: CaFe Preparation](https://hallcweb.jlab.org/wiki/index.php/CaFe_Preparation)
@@ -31,7 +30,7 @@ The submodules are: <br>
 
 
 # Setting Up a CaFe Work Space Remotely
--
+
 
 In theory, any uses can clone this repository on any machine (local or remote) of their choice. In practice, it is highly recommended to set up a work space on ifarm since, it already has all the necessary tools that a local machine might not have (e.g. ROOT CERN, Python, certain library dependencies / setup for running simulations on gfortran, direct access to raw data file, etc.) 
 
@@ -61,7 +60,7 @@ $ cd CaFe-Online
 ```
 
 # Accessing Git Submodules for Starters
--
+
 
 At this point, the user will be able to various submodules (e.g., hallc_simulations, etc.) which are currently empty and will need to be initialized only ONCE on a given machine you are working on. <br>
 
@@ -91,7 +90,7 @@ $ git push origin user_work_branch
 the submodule in question will then have a new branch remotely which can be merged onto the master branch by the repository maintainer. **NOTE:** The user may need to be a member of the repository or project in order to be able to push the changes to a new branch.
 
 # Updating Existing Git Submodules
--
+
 
 Recall, a submodule is an independent repo within anothe git repo
 and it might get updated by another user remotely, so you would want to
@@ -106,7 +105,7 @@ $ git submodule update --recursive --remote <submodule>
 
 
 # Adding a New Git Submodule
--
+
 
 If the user want to add a new github submodule, then from the main repo do:
 
