@@ -48,7 +48,7 @@ Meeting Link (in case one of us can't attend in person): <br>
 > +16468287666, 16178802265# US (New York)
 
 
-`First Week: Feb 14 - Feb 18, 2022` <br>
+`First Week` <br>
 
 * discuss weekly meeting times 
 
@@ -70,7 +70,7 @@ Meeting Link (in case one of us can't attend in person): <br>
 If installation proceeds smoothly, we will move on to attempting a simulation with a recent CaFe input file to get familiar with the process and will assign Noah to do a few simulations for the CaFe using different targets/kinematics, 
 and familiarize with the relevant root leaf variables
 
-`Second Week: Feb 21 - Feb 25, 2022` <br>
+`Second Week` <br>
 
 **Second Week Tasks:** <br>
 
@@ -80,14 +80,14 @@ and familiarize with the relevant root leaf variables
 as well as the idea of 'weighted' events, and many more finer technical details that could be easily missed if one does not explicitly write the code.
 
 
-`Third Week:  Feb 28 - Mar 04, 2022` <br>
+`Third Week` <br>
 
 **Third Week Tasks:** <br>
 
 * discuss/clarify any questions from work done on previous week.
 * Noah will continue writing code for CaFe rate estimations.
 
-`Fourth Week: Mar 07 - Mar 11, 2022` <br>
+`Fourth Week` <br>
 
 **Fourth Week Tasks:** <br>
 
@@ -96,7 +96,7 @@ as well as the idea of 'weighted' events, and many more finer technical details 
 estimates should start to be calculated.
 * rate estimates can be compared to those determined by Dien Thi Nguyen.
 
-`Fifth Week:  Mar 14 - Mar 18, 2022` <br>
+`Fifth Week` <br>
 
 **Fifth Week Tasks:** <br>
 
@@ -104,35 +104,35 @@ estimates should start to be calculated.
 * Start to get familiarized with `hallc_replay` infrastructure (there are many technical details and this task is expected to extend beyond the study plan)
 * Try to do a successful replay of existing data (you will need `hcana` to also be compiled)
 
-`Sixth Week:  Mar 21 - Mar 25, 2022` <br>
+`Sixth Week` <br>
 
 **Sixth Week Tasks:** <br>
 
 * discuss/clarify any questions from work done on previous week.
 * start to learn about setting reference times/detector time window cuts
 
-`Seventh Week: Mar 28 - April 01, 2022` <br>
+`Seventh Week` <br>
 
 **Seventh Week Tasks:** <br>
 
 * discuss/clarify any questions from work done on previous week.
 * start to learn how to run hodoscope calibration code
 
-`Eigth Week: April 04 - April 08, 2022` <br>
+`Eigth Week` <br>
 
 **Eigth Week Tasks:** <br>
 
 * discuss/clarify any questions from work done on previous week.
 * start to learn how to run drift chambers calibration code
 
-`Ninth Week: April 11 - April 15, 2022` <br>
+`Ninth Week` <br>
 
 **Ninth Week Tasks:** <br>
 
 * discuss/clarify any questions from work done on previous week.
 * start to learn how to run calorimeter calibration code
 
-`Tenth Week: April 18 - April 22, 2022` <br>
+`Tenth Week` <br>
 
 **Tenth Week Tasks:** <br>
 
