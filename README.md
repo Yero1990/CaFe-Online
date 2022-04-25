@@ -1,4 +1,5 @@
 # CaFe-Online
+--
 For information on the Hall C CaFe Experiment, please see the CaFe Wiki:
 [Hall C Wiki: CaFe Preparation](https://hallcweb.jlab.org/wiki/index.php/CaFe_Preparation)
 
@@ -23,20 +24,46 @@ The submodules are: <br>
 (c) beam time/ rate estimates, <br>
 (d) data-to-simulation comparisons <br>
 
+**NOTE:**  
+1. To do Hall C data analysis requires: `hcana` and `cafe_online_replay` submodules.  <br>
+2. To do Hall C simulations requires: `deut_simc` and `hallc_simulations` submodules
 
-# Accessing Git Submodules for Starters
-Assuming the user has a GitHub account and has not yet cloned the `CaFe-Online` repository, here are the initial steps to get started: <br>
 
-`step 1: ` On any machine (local or remote) of the user choice: <br>
+# Setting Up a CaFe Work Space Remotely
+-
+In theory, any uses can clone this repository on any machine (local or remote) of their choice. In practice, it is highly recommended to set up a work space on ifarm since, it already has all the necessary tools that a local machine might not have (e.g. ROOT CERN, Python, certain library dependencies / setup for running simulations on gfortran, direct access to raw data file, etc.) 
+
+`step 1:` Assuming the user has a Jefferson Lab account and has access to the JLab machines on ifarm, execute the following commands:
 
 ```sh
+# login to ifarm
+$ ssh -Y user@login.jlab.org 
+$ ssh -Y ifarm 
+
+# setup necessary environment variables 
+# tip: put this command in you(.cshrc or bashrc) on ifarm so it automatically gets called
+# every log-in session (and not have to type by hand every time)
+$ source /site/12gev_phys/softenv.csh 2.5 
+
+# Create symbolic link to the CaFe work directory. 
+# For more info see [https://hallcweb.jlab.org/wiki/index.php/CaFe_Disk_Space]
+$ ln -s /work/hallc/c-cafe-2022/ cafe_work 
+$ cd cafe_work 
+
+# If you don't have a user directory, make one and cd to it !
+$ mkdir <user> 
+$ cd <user>
+
 $ git clone https://github.com/Yero1990/CaFe-Online
 $ cd CaFe-Online
 ```
 
+# Accessing Git Submodules for Starters
+-
+
 At this point, the user will be able to various submodules (e.g., hallc_simulations, etc.) which are currently empty and will need to be initialized only ONCE on a given machine you are working on. <br>
 
-`step 2: ` Initialize the submodule of interest 
+ Initialize the submodule of interest 
 
 ```sh
 $ git submodule update --init <submodule>
@@ -46,20 +73,23 @@ $ git branch
 NOTE 2: the initialized submodule(s) will be in a HEAD detached state
 ```
 
-From NOTE 2 , HEAD in a detached state means you are not pointing to any particular branch, and changes can be made safely without impacting other branches. If you would like to keep the changes, then a branch would have to be created: `git checkout -b <branch_name>`, and any changes can be saved and push remotely from the new branch. 
+##### NOTE 2 Follow-Up:  
+HEAD in a detached state means you are not pointing to any particular branch, and changes can be made safely without impacting other branches. If you would like to keep the changes, then a branch would have to be created: `git checkout -b <branch_name>`, and any changes can be saved and push remotely from the new branch. 
 
-`step 3:` If you plan to make significant contributions to the the official submodule in question, then do (from inside the submodule): <br>
+`step 2:` If you plan to make significant contributions to the the official submodule in question, then do (from inside the submodule): <br>
 
 ```sh
 $ git checkout -b <user_work_branch>
+
+# then after making changes/additions/subtractions, do: 
 $ git add <files changed>
 $ git commit -m "commit message"
 $ git push origin user_work_branch
 ```
-the submodule in question will then have a new branch remotely which can be merged onto the master branch by the repository maintainer.
+the submodule in question will then have a new branch remotely which can be merged onto the master branch by the repository maintainer. **NOTE:** The user may need to be a member of the repository or project in order to be able to push the changes to a new branch.
 
 # Updating Existing Git Submodules
-
+-
 Recall, a submodule is an independent repo within anothe git repo
 and it might get updated by another user remotely, so you would want to
 keep the local copy of your submodule up-to-date with the remote version. <br>
@@ -71,15 +101,9 @@ to update it locally do (from the main repo containing the submodules):
 $ git submodule update --recursive --remote <submodule> 
 ```
 
-If in addition to the local update, the user would like to push the changes remotely to their version of the repository, then do: <br>
-
-```sh
-$ git add <submodule>
-$ git commit -m "updated submodule commit message"
-$ git push origin master 
-```
 
 # Adding a New Git Submodule
+-
 If the user want to add a new github submodule, then from the main repo do:
 
 ```sh
