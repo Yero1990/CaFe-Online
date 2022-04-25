@@ -25,14 +25,14 @@ The submodules are: <br>
 (d) data-to-simulation comparisons <br>
 
 **NOTE:**  
-1. To do Hall C data analysis requires: `hcana` and `cafe_online_replay` submodules.  <br>
+1. To do Hall C data analysis requires: `hcana` and `cafe_online_replay` submodules  <br>
 2. To do Hall C simulations requires: `deut_simc` and `hallc_simulations` submodules
 
 
 # Setting Up a CaFe Work Space Remotely
 
 
-In theory, any uses can clone this repository on any machine (local or remote) of their choice. In practice, it is highly recommended to set up a work space on ifarm since, it already has all the necessary tools that a local machine might not have (e.g. ROOT CERN, Python, certain library dependencies / setup for running simulations on gfortran, direct access to raw data file, etc.) 
+In theory, any user can clone this repository on any machine (local or remote) of their choice. In practice, it is highly recommended to set up a work space on ifarm since, it already has all the necessary tools that a local machine might not have (e.g. ROOT CERN, Python, certain library dependencies / setup for running simulations on gfortran, direct access to raw data file, etc.) 
 
 `step 1:` Assuming the user has a Jefferson Lab account and has access to the JLab machines on ifarm, execute the following commands:
 
@@ -62,7 +62,7 @@ $ cd CaFe-Online
 # Accessing Git Submodules for Starters
 
 
-At this point, the user will be able to various submodules (e.g., hallc_simulations, etc.) which are currently empty and will need to be initialized only ONCE on a given machine you are working on. <br>
+At this point, the user will be able to access various submodules (e.g., hcana, hallc_simulations, etc.) which are currently empty and will need to be initialized only ONCE on a given machine you are working on. <br>
 
  Initialize the submodule of interest 
 
