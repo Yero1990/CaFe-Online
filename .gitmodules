@@ -7,3 +7,6 @@
 [submodule "cafe_online_replay"]
 	path = cafe_online_replay
 	url = https://github.com/Yero1990/cafe_online_replay
+[submodule "hcana"]
+	path = hcana
+	url = https://github.com/Yero1990/hcana
