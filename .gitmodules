@@ -1,0 +1,3 @@
+[submodule "hallc_simulations"]
+	path = hallc_simulations
+	url = https://github.com/Yero1990/hallc_simulations
