@@ -1,3 +1,6 @@
 [submodule "hallc_simulations"]
 	path = hallc_simulations
 	url = https://github.com/Yero1990/hallc_simulations
+[submodule "deut_simc"]
+	path = deut_simc
+	url = https://github.com/Yero1990/deut_simc
