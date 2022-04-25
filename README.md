@@ -9,13 +9,13 @@ The submodules are: <br>
 
 `hcana` : main Hall C Analyzer (analysis of raw data files (.dat) into ROOTfiles in ntuple-format) <br>
 
-`cafe_online_replay`: CaFe version of the Hall C analysis replay repository, `hallc_replay`, with: <br> 
+`cafe_online_replay`: CaFe version of the Hall C analysis replay repository: <br> 
 
 (a) data analysis replay scripts (runs thru hcana) to generate ROOTfiles from raw data,  <br>
 (b) detector calibration scripts, <br>
 (c) parameters/calibration files storage thru Hall C database  <br>
 
-`deut_simc`: modified version (for deuteron) of the Hall C simulation software, `simc_gfortran`, to read numerical files from the Laget deuteron model and apply the event weighting using either Laget PWIA or FSI models.  <br>
+`deut_simc`: modified version of the Hall C simulation software to read numerical files from the Laget deuteron model and apply the event weighting using either Laget PWIA or FSI models.  <br>
 
 `hallc_simulations`: useful scripts to <br>
 
@@ -28,13 +28,14 @@ The submodules are: <br>
 1. To do Hall C data analysis requires: `hcana` and `cafe_online_replay` submodules  <br>
 2. To do Hall C simulations requires: `deut_simc` and `hallc_simulations` submodules
 
+After initializing the submodules (see instructions below), please follow the instructions on the README file of the submodule you plan to work in.
 
 # Setting Up a CaFe Work Space Remotely
 
 
 In theory, any user can clone this repository on any machine (local or remote) of their choice. In practice, it is highly recommended to set up a work space on ifarm since, it already has all the necessary tools that a local machine might not have (e.g. ROOT CERN, Python, certain library dependencies / setup for running simulations on gfortran, direct access to raw data file, etc.) 
 
-`step 1:` Assuming the user has a Jefferson Lab account and has access to the JLab machines on ifarm, execute the following commands:
+Assuming the user has a Jefferson Lab account and has access to the JLab machines on ifarm, execute the following commands:
 
 ```sh
 # login to ifarm
@@ -74,10 +75,10 @@ $ git branch
 NOTE 2: the initialized submodule(s) will be in a HEAD detached state
 ```
 
-##### NOTE 2 Follow-Up:  
+##### Follow-Up on NOTE 2:  
 HEAD in a detached state means you are not pointing to any particular branch, and changes can be made safely without impacting other branches. If you would like to keep the changes, then a branch would have to be created: `git checkout -b <branch_name>`, and any changes can be saved and push remotely from the new branch. 
 
-`step 2:` If you plan to make significant contributions to the the official submodule in question, then do (from inside the submodule): <br>
+`(optional)` If you plan to make significant contributions to the the official submodule in question, then do (from inside the submodule): <br>
 
 ```sh
 $ git checkout -b <user_work_branch>
