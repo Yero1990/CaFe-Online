@@ -53,6 +53,16 @@ $ cd <user>
 
 $ git clone https://github.com/Yero1990/CaFe-Online
 $ cd CaFe-Online
+
+# (optional) if you plan to make active contributions to this repo, then
+(a) fork a copy of this repo to your own GitHub account
+(b) clone your forked version (origin will be set to your remote forked path)
+(c) set a track to the upstram branch (needed to keep your forked copy and 
+    local machine copy up-to-date) 
+$ git remote add --track master upstream https://github.com/Yero1990/CaFe-Online 
+
+For more details, see for example: 
+[https://gist.github.com/rjdmoore/ed014fba0ee2c7e75060ccd01b726cb8]
 ```
 
 # Accessing Git Submodules for Starters
@@ -88,7 +98,7 @@ the submodule in question will then have a new branch remotely which can be merg
 # Updating Existing Git Submodules
 
 
-Recall, a submodule is an independent repo within anothe git repo
+Recall, a submodule is an independent repo within another git repo
 and it might get updated by another user remotely, so you would want to
 keep the local copy of your submodule up-to-date with the remote version. <br>
 
@@ -99,6 +109,13 @@ to update it locally do (from the main repo containing the submodules):
 $ git submodule update --recursive --remote <submodule> 
 ```
 
+Now, even though the submodule itself has been updated, the reference to the submodule has not been updated remotely. If you were to clone this repo in another machine, for instance, then the reference to the submodule will not be up-to-date. To update your remote version of the reference to the submodule from this repo, do:
+
+```sh
+$ git add <submodule>
+$ git commit -m "updated submodule"
+$ git push origin master # assuming origin points to your forked copy of this repo
+```
 
 # Adding a New Git Submodule
 
