@@ -42,11 +42,6 @@ Assuming the user has a Jefferson Lab account and has access to the JLab machine
 $ ssh -Y user@login.jlab.org 
 $ ssh -Y ifarm 
 
-# setup necessary environment variables 
-# tip: put this command in you(.cshrc or bashrc) on ifarm so it automatically gets called
-# every log-in session (and not have to type by hand every time)
-$ source /site/12gev_phys/softenv.csh 2.5 
-
 # Create symbolic link to the CaFe work directory. 
 # For more info see [https://hallcweb.jlab.org/wiki/index.php/CaFe_Disk_Space]
 $ ln -s /work/hallc/c-cafe-2022/ cafe_work 
