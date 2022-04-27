@@ -30,6 +30,7 @@ The submodules are: <br>
 
 After initializing the submodules (see instructions below), please follow the instructions on the README file of the submodule you plan to work in.
 
+For additional detailed information see documentaion on [Git Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 # Setting Up a CaFe Work Space Remotely
 
 
