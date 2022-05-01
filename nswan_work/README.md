@@ -12,10 +12,11 @@ As a by-product of this study plan, Noah will also be familiarized with github u
 To successfully carry out this study plan, we will need to have installed the following: <br>
 
 * GitHub (which is a web-based version-control and collaboratio platform for software developers)
-	* `deut_simc` repository used for carrying out simulations
-	* `hallc_replay` repository used to do data replay
+	* `deut_simc` repository which contains the simulation source code SIMC 
+	* `hallc_simulations` repository used for carrying out simulations
+	* `cafe_online_replay` repository used to do data replay
 	* `hcana` repository which is the Hall C source code (needed for data replay)
-* Python programming language (preferably recent version, e.g., Python 3.8.4)
+* Python programming language (preferably Python < 3.0, required by hcana to execute Scons compiler)
 * LaTeX (which is a document preparation system to facilitate the writing of research and scientific papers) 
 * ROOT CERN (object oriented programming designed for physics data analysis) <br>
 
@@ -26,15 +27,14 @@ Reading Material: <br>
 [General Hall C 12 GeV Analysis Procedure](https://hallcweb.jlab.org/DocDB/0010/001032/001/analysis_notes.pdf) by C. Yero
 
 ## Overview of Tasks/Meetings and Timeline
-Noah will be assigned several tasks on a weekly basis to be completed by the end of each week, and we'll meet at the start of the following week to discuss the progress made and new tasks to be completed. The entire study plan will last 10 weeks (can be flexible, depending on difficulty of tasks), after which Noah will have the necessary tools to be able to carry out and analyze the upcoming CaFe experiment in Hall C (June 8-15, 2022) <br>
+Noah will be assigned several tasks on a weekly basis to be completed by the end of each week, and we'll meet at the start of the following week to discuss the progress made and new tasks to be completed. The entire study plan will last 10 weeks (can be flexible, depending on difficulty of tasks), after which Noah will have the necessary tools to be able to carry out and analyze the upcoming CaFe experiment in Hall C (Mid-August 2022) <br>
 
 By the end of the program, Noah will provide **a 2-4 page report on what has been learned.** It is also encouraged to present a  10-20 informal talk on the topics covered during the study plan. This will help solidify what has been learned. <br>
 
 > **We will meet on Mondays (flexible time) to discuss new tasks to be done during the week and Fridays (flexible time) to discuss work that has been done during that week.**
 
 **In-Person Meeting Information:** <br>
-Meeting Days:  Monday, Friday <br>
-Meeting Time: flexible (8 am - 6 pm) <br>
+Meeting Days:  Mondays @ 9:00 am <br>
 Meeting Room: PSB 2100L <br>
 
 Meeting Link (in case one of us can't attend in person): <br>
@@ -60,15 +60,21 @@ Meeting Link (in case one of us can't attend in person): <br>
 	*  ROOT, GitHub, Python and LaTeX if necessary <br> 
   ( see [root-installation](https://root.cern/install/), [github-installation](https://github.com/git-guides/install-git), [python-installation](https://www.wikihow.com/Install-Python#Mac) and [latex-installation](https://www.latex-project.org/get/) )
 
-* clone the following GitHub repositories in this directory (and make sure they compile without errors):
+* clone (preferably fork+clone) the following GitHub repositories in any desired work space (and make sure they compile without errors):
 	*  [https://github.com/Yero1990/deut_simc](https://github.com/Yero1990/deut_simc)
+	*  [https://github.com/Yero1990/hallc_simulations](https://github.com/Yero1990/hallc_simulations)
 	*  [https://github.com/JeffersonLab/hcana](https://github.com/JeffersonLab/hcana)
-	*  [https://github.com/JeffersonLab/hallc_replay](https://github.com/JeffersonLab/hallc_replay)
+	*  [https://github.com/Yero1990/cafe\_online\_replay](https://github.com/Yero1990/cafe_online_replay)
+
+	Alternatively, the student can fork+clone the repository: [https://github.com/Yero1990/CaFe-Online
+](https://github.com/Yero1990/CaFe-Online) <br>
+which contains the 4 above-mentioned repositories as git submodules (repositories within a repository) and follow the instructions of the README file. 
+
 
 **First Week Tasks:** <br>
 
 If installation proceeds smoothly, we will move on to attempting a simulation with a recent CaFe input file to get familiar with the process and will assign Noah to do a few simulations for the CaFe using different targets/kinematics, 
-and familiarize with the relevant root leaf variables
+and familiarize with the relevant root leaf variables. Also, should begin writing a script that reads the SIMC output simulation file, loops over events and fills certain histograms needed for further analysis.
 
 `Second Week` <br>
 
@@ -76,7 +82,7 @@ and familiarize with the relevant root leaf variables
 
 * discuss/clarify any questions from work done on previous week
 
-* Noah will start writing code (with help from Carlos) for CaFe rate estimations using deuteron (SRC kinematics) and Carbon-12 (Mean-Field or MF kinematics). Although this code may have already been written previously, it is a good exercise to do as it will give a more comprehensive understanding of concepts such as beam charge, time, currents, yields, rates etc. 
+* Noah will start writing code if not already started on previous week (with help from Carlos) for CaFe rate estimations using deuteron (SRC kinematics) and Carbon-12 (Mean-Field or MF kinematics). Although this code may have already been written previously, it is a good exercise to do as it will give a more comprehensive understanding of concepts such as beam charge, time, currents, yields, rates etc. 
 as well as the idea of 'weighted' events, and many more finer technical details that could be easily missed if one does not explicitly write the code.
 
 
