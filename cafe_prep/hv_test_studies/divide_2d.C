@@ -168,23 +168,23 @@ void divide_2d(){
 
   
   // Shower Pulse Int/Amp vs. event number and adcCounter
-  T_hv_off->Draw("P.cal.fly.goodAdcPulseInt:g.evnum>>fly_pI_vs_evNum_hvOFF(12, 0, 2600000, 100, 0.001, 20)", "", "colz");
+  T_hv_off->Draw("P.cal.fly.goodAdcPulseInt:g.evnum>>fly_pI_vs_evNum_hvOFF(8, 0, 1600000, 100, 0.001, 20)", "", "colz");
   TH2F *fly_pI_vs_evNum_hvOFF = (TH2F*)gPad->GetPrimitive("fly_pI_vs_evNum_hvOFF");
 
   T_hv_off->Draw("P.cal.fly.goodAdcPulseInt:P.cal.fly.adcCounter>>fly_pI_vs_PMT_hvOFF(224,0.5,224.5, 100,0.001,20)", "", "colz");
   TH2F *fly_pI_vs_PMT_hvOFF = (TH2F*)gPad->GetPrimitive("fly_pI_vs_PMT_hvOFF");
     
-  T_hv_off->Draw("P.cal.fly.goodAdcPulseAmp:g.evnum>>fly_pA_vs_evNum_hvOFF(12, 0, 2600000, 100, 0.001, 30)", "", "colz");
+  T_hv_off->Draw("P.cal.fly.goodAdcPulseAmp:g.evnum>>fly_pA_vs_evNum_hvOFF(8, 0, 1600000, 100, 0.001, 30)", "", "colz");
   TH2F *fly_pA_vs_evNum_hvOFF = (TH2F*)gPad->GetPrimitive("fly_pA_vs_evNum_hvOFF");
  
   T_hv_off->Draw("P.cal.fly.goodAdcPulseAmp:P.cal.fly.adcCounter>>fly_pA_vs_PMT_hvOFF(224,0.5,224.5, 100,0.001,30)", "", "colz");
   TH2F *fly_pA_vs_PMT_hvOFF = (TH2F*)gPad->GetPrimitive("fly_pA_vs_PMT_hvOFF");
 
   // pre-Shower Pulse Int vs. event number and adcCounter
-  T_hv_off->Draw("P.cal.pr.goodPosAdcPulseInt:g.evnum>>prSh_pI_pos_vs_evNum_hvOFF(12, 0, 2600000, 100, 0.001, 20)", "", "colz");
+  T_hv_off->Draw("P.cal.pr.goodPosAdcPulseInt:g.evnum>>prSh_pI_pos_vs_evNum_hvOFF(8, 0, 1600000, 100, 0.001, 20)", "", "colz");
   TH2F *prSh_pI_pos_vs_evNum_hvOFF = (TH2F*)gPad->GetPrimitive("prSh_pI_pos_vs_evNum_hvOFF");
 
-  T_hv_off->Draw("P.cal.pr.goodNegAdcPulseInt:g.evnum>>prSh_pI_neg_vs_evNum_hvOFF(12, 0, 2600000, 100, 0.001, 20)", "", "colz");
+  T_hv_off->Draw("P.cal.pr.goodNegAdcPulseInt:g.evnum>>prSh_pI_neg_vs_evNum_hvOFF(8, 0, 1600000, 100, 0.001, 20)", "", "colz");
   TH2F *prSh_pI_neg_vs_evNum_hvOFF = (TH2F*)gPad->GetPrimitive("prSh_pI_neg_vs_evNum_hvOFF");
   
   T_hv_off->Draw("P.cal.pr.goodPosAdcPulseInt:P.cal.pr.posAdcCounter>>prSh_pI_pos_vs_PMT_hvOFF(14,0.5,14.5, 100,0.001,20)", "", "colz");
@@ -194,10 +194,10 @@ void divide_2d(){
   TH2F *prSh_pI_neg_vs_PMT_hvOFF = (TH2F*)gPad->GetPrimitive("prSh_pI_neg_vs_PMT_hvOFF");
 
   // pre-Shower Pulse Amp vs. event number and adcCounter
-  T_hv_off->Draw("P.cal.pr.goodPosAdcPulseAmp:g.evnum>>prSh_pA_pos_vs_evNum_hvOFF(12, 0, 2600000, 100, 0.001, 30)", "", "colz");
+  T_hv_off->Draw("P.cal.pr.goodPosAdcPulseAmp:g.evnum>>prSh_pA_pos_vs_evNum_hvOFF(8, 0, 1600000, 100, 0.001, 30)", "", "colz");
   TH2F *prSh_pA_pos_vs_evNum_hvOFF = (TH2F*)gPad->GetPrimitive("prSh_pA_pos_vs_evNum_hvOFF");
 
-  T_hv_off->Draw("P.cal.pr.goodNegAdcPulseAmp:g.evnum>>prSh_pA_neg_vs_evNum_hvOFF(12, 0, 2600000, 100, 0.001, 30)", "", "colz");
+  T_hv_off->Draw("P.cal.pr.goodNegAdcPulseAmp:g.evnum>>prSh_pA_neg_vs_evNum_hvOFF(8, 0, 1600000, 100, 0.001, 30)", "", "colz");
   TH2F *prSh_pA_neg_vs_evNum_hvOFF = (TH2F*)gPad->GetPrimitive("prSh_pA_neg_vs_evNum_hvOFF");
   
   T_hv_off->Draw("P.cal.pr.goodPosAdcPulseAmp:P.cal.pr.posAdcCounter>>prSh_pA_pos_vs_PMT_hvOFF(14,0.5,14.5, 100,0.001,30)", "", "colz");
