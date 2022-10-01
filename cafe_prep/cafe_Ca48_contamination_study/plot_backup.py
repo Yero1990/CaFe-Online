@@ -1,80 +1,100 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
+import csv
+import pandas as pd
 
-runs_ca48_MF = [
+# read DATA csv files
+df_data = pd.read_csv("ca48_data.csv")
+
+#read scaler csv file
+df_scaler = pd.read_csv("ca48_scaler.csv")
+
+
+runs_ca48_MF = np.array([
     16978,
     16979
-]
+])
 
-T2_sclrate_per_I_MF_contam = [
+T2_sclrate_per_I_MF_contam = np.array([
     3315.289,
     3329.997
-]
+])
 
-SHMS_EL_CLEAN_per_I_MF_contam = [
+SHMS_EL_CLEAN_per_I_MF_contam = np.array([
     2675,
     2684
-]
+])
 
-T2_scl_per_mC_MF = [
+T2_scl_per_mC_MF = np.array([
     3268398.019,
     3283021.608
-]
+])
 
 # normalize all runs to the 1st SRC run
-T2_scl_per_mC_MF_norm = [
+T2_scl_per_mC_MF_norm = np.array([
     3268398.019/3400973.643,
     3283021.608/3400973.643
-]
+])
 
-avg_I_MF = [
+T2_sclrate_per_I_MF_contam_norm = T2_sclrate_per_I_MF_contam / 3448.005
+SHMS_EL_CLEAN_per_I_MF_contam_norm = SHMS_EL_CLEAN_per_I_MF_contam / 2814
+
+
+avg_I_MF = np.array([
     27.489,
     27.972
-]
+])
 
 #-------------------------
 
 
-runs_ca48_MF_uncontam = [
+runs_ca48_MF_uncontam = np.array([
     17093,
     17094,
     17096
-]
+])
 
-T2_sclrate_per_I_MF_uncontam = [
+T2_sclrate_per_I_MF_uncontam = np.array([
     3267.929,
     3293.225,
-    3440.049
-]
+    3440.049 
+])
 
-SHMS_EL_CLEAN_per_I_MF_uncontam = [
+SHMS_EL_CLEAN_per_I_MF_uncontam = np.array([
     2598,
     2624,
     2780
-]
+])
 
-T2_scl_per_mC_MF_uncontam = [
+T2_scl_per_mC_MF_uncontam = np.array([
     3220936.006,
     3246244.621,
-    3393084.293
-]
+    3393084.293 
+])
 
 # normalize all runs to the 1st SRC run
-T2_scl_per_mC_MF_uncontam_norm = [
+T2_scl_per_mC_MF_uncontam_norm = np.array([
     3220936.006/3400973.643,
     3246244.621/3400973.643,
     3393084.293/3400973.643
-]
+])
 
-avg_I_MF_uncontam = [
+# normalize 
+T2_sclrate_per_I_MF_uncontam_norm = T2_sclrate_per_I_MF_uncontam / 3448.005
+
+SHMS_EL_CLEAN_per_I_MF_uncontam_norm = SHMS_EL_CLEAN_per_I_MF_uncontam / 2814
+
+
+avg_I_MF_uncontam = np.array([
     28.783,
     33.181,
-    60.046
-]
+    60.046 
+])
 
 #---------------------------
 
-runs_ca48_src = [
+runs_ca48_src = np.array([
        17036,
        17037,
        17038,
@@ -93,9 +113,10 @@ runs_ca48_src = [
        17054,
        17055,
        17056,
-       17057]
+       17057])
 
-avg_I_SRC = [51.922,
+avg_I_SRC = np.array([
+             51.922,
              51.387,
              55.110,
              52.978,
@@ -113,10 +134,11 @@ avg_I_SRC = [51.922,
              55.343,
              55.056,
              56.409,
-             55.121]
+             55.121 
+])
 
 
-T2_scl_per_mC_SRC = [
+T2_scl_per_mC_SRC = np.array([
     3400973.643,
     3379238.008,
     3382185.694,
@@ -135,12 +157,12 @@ T2_scl_per_mC_SRC = [
     3334624.234,
     3331341.202,
     3331518.378,
-    3325337.344
-]
+    3325337.344 
+])
 
 
 # normalize all runs to the 1st SRC run
-T2_scl_per_mC_SRC_norm = [
+T2_scl_per_mC_SRC_norm = np.array([
     3400973.643/3400973.643,
     3379238.008/3400973.643,
     3382185.694/3400973.643,
@@ -160,12 +182,12 @@ T2_scl_per_mC_SRC_norm = [
     3331341.202/3400973.643,
     3331518.378/3400973.643,
     3325337.344/3400973.643
-]
+])
 
 
 # T2 (SHMS EL-REAL) scaler rate / avg. current [Hz / uA] = [ s^-1 / (uC*s^-1)] = [uC^-1] --> T2 Counts / uC
 # Obtained from analyzed scalers which have fine cut on bcm charge
-T2_sclrate_per_I = [
+T2_sclrate_per_I = np.array([
                   3448.005,
                   3426.201,
                   3429.217,
@@ -184,11 +206,13 @@ T2_sclrate_per_I = [
                   3381.622,
                   3378.354,
                   3378.507,
-                  3372.321]
+                  3372.321])
 
+T2_sclrate_per_I_norm = T2_sclrate_per_I / 3448.005
 
 # SHMS EL_CLEAN (done from interactive raw ROOTfile (SHMS EL CLEAN Counts / uC)
-SHMS_EL_CLEAN_per_I = [2814,
+SHMS_EL_CLEAN_per_I = np.array([
+                       2814,
                        2800,
                        2794,
                        2789,
@@ -206,17 +230,28 @@ SHMS_EL_CLEAN_per_I = [2814,
                        2750,
                        2746,
                        2744,
-                       2739
-]
+                       2739 
+])
+
+# normalize el-clean
+SHMS_EL_CLEAN_per_I_norm = SHMS_EL_CLEAN_per_I / 2814.
+
 
 fig0, (ax1, ax2) = plt.subplots(2)
 ax1.set_title('T2 Scaler Counts / Charge Normalized to 1st SRC Run: 17036')
 #ax2.set_title('Beam Current')
 
-ax1.plot(runs_ca48_MF, T2_scl_per_mC_MF_norm, marker='o', color='blue', markersize=7, linestyle='None', label='MF')
-ax1.plot(runs_ca48_src, T2_scl_per_mC_SRC_norm, marker='o', color='red', markersize=7, linestyle='None', label='SRC')
-ax1.plot(runs_ca48_MF_uncontam, T2_scl_per_mC_MF_uncontam_norm, marker='o', color='green', markersize=7, linestyle='None', label='MF (round 2)')
-ax1.set_ylabel('Normalized T2 scalers/mC to 1st SRC run', fontsize=20)
+#ax1.plot(runs_ca48_MF, T2_scl_per_mC_MF_norm, marker='o', color='blue', markersize=7, linestyle='None', label='MF')
+#ax1.plot(runs_ca48_src, T2_scl_per_mC_SRC_norm, marker='o', color='red', markersize=7, linestyle='None', label='SRC')
+#ax1.plot(runs_ca48_MF_uncontam, T2_scl_per_mC_MF_uncontam_norm, marker='o', color='green', markersize=7, linestyle='None', label='MF (round 2)')
+
+ax1.plot(runs_ca48_MF, T2_sclrate_per_I_MF_contam_norm, marker='o', color='blue', markersize=7, linestyle='None', label='MF')
+ax1.plot(runs_ca48_src, T2_sclrate_per_I_norm, marker='o', color='red', markersize=7, linestyle='None', label='SRC')
+ax1.plot(runs_ca48_MF_uncontam, T2_sclrate_per_I_MF_uncontam_norm, marker='o', color='green', markersize=7, linestyle='None', label='MF (round 2)')
+
+
+
+ax1.set_ylabel('Normalized T2 scalers/mC', fontsize=20)
 ax1.tick_params(axis='both', which='both', labelsize=17)
 #ax1.set_xlabel('Run Number', fontsize=20)
 
@@ -241,6 +276,16 @@ ax1.legend(loc='upper left')
 ax2.legend(loc='upper left')
 
 plt.show()
+
+
+
+
+
+
+
+
+
+
 
 '''
 fig, (ax1, ax2, ax3) = plt.subplots(3)

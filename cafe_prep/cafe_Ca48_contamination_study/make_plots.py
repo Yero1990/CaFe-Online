@@ -1,7 +1,56 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import csv
+import pandas as pd
 
+# read DATA csv files
+# data contains regional cuts on Emiss vs. Pmiss plots to select
+# H-contamination area (region 1) and pure Ca-48 area (region 2)
+
+df_data = pd.read_csv("ca48_data.csv")
+
+run = df_data['run']
+kin = df_data['kin']
+I_avg = df_data['I_avg']
+region1_cnts = df_data['region1_counts']
+region2_cnts = df_data['region2_counts']
+R = region1_cnts / region2_cnts  # contamination fraction
+R_rel = R / R[0]  # contamination relative to 1st Ca-48 MF run
+
+fig0, (ax1, ax2) = plt.subplots(2)
+ax1.set_title('Relative H-contamination to 1st Ca-48 MF run')
+ax1.plot(run[:2], R_rel[:2], marker='o', color='blue', markersize=7, linestyle='None', label='MF')
+ax1.plot(run[2:], R_rel[2:], marker='o', color='green', markersize=7, linestyle='None', label='MF (round 2)')
+ax1.legend(loc='upper left')
+ax1.grid()
+
+ax2.set_title('Beam Current')
+ax2.plot(run[:2], I_avg[:2], marker='o', color='blue', markersize=7, linestyle='None', label='MF')
+ax2.plot(run[2:], I_avg[2:], marker='o', color='green', markersize=7, linestyle='None', label='MF (round 2)')
+ax2.set_ylabel('Averge Beam Current [uA]', fontsize=20)
+ax2.tick_params(axis='both', which='both', labelsize=17)
+ax2.set_xlabel('Run Number', fontsize=20)
+ax2.legend(loc='upper left')
+ax2.grid()
+
+
+ax1.set_ylim([0.75, 1.1])
+ax2.set_ylim([25, 65])
+
+plt.plot()
+plt.show()
+
+
+
+#read scaler csv file
+df_scaler = pd.read_csv("ca48_scaler.csv")
+
+
+
+
+
+'''
 runs_ca48_MF = np.array([
     16978,
     16979
@@ -49,7 +98,7 @@ runs_ca48_MF_uncontam = np.array([
 T2_sclrate_per_I_MF_uncontam = np.array([
     3267.929,
     3293.225,
-    3440.049
+    3440.049 
 ])
 
 SHMS_EL_CLEAN_per_I_MF_uncontam = np.array([
@@ -61,7 +110,7 @@ SHMS_EL_CLEAN_per_I_MF_uncontam = np.array([
 T2_scl_per_mC_MF_uncontam = np.array([
     3220936.006,
     3246244.621,
-    3393084.293
+    3393084.293 
 ])
 
 # normalize all runs to the 1st SRC run
@@ -80,7 +129,7 @@ SHMS_EL_CLEAN_per_I_MF_uncontam_norm = SHMS_EL_CLEAN_per_I_MF_uncontam / 2814
 avg_I_MF_uncontam = np.array([
     28.783,
     33.181,
-    60.046
+    60.046 
 ])
 
 #---------------------------
@@ -106,7 +155,8 @@ runs_ca48_src = np.array([
        17056,
        17057])
 
-avg_I_SRC = np.array([51.922,
+avg_I_SRC = np.array([
+             51.922,
              51.387,
              55.110,
              52.978,
@@ -124,7 +174,8 @@ avg_I_SRC = np.array([51.922,
              55.343,
              55.056,
              56.409,
-             55.121])
+             55.121 
+])
 
 
 T2_scl_per_mC_SRC = np.array([
@@ -146,7 +197,7 @@ T2_scl_per_mC_SRC = np.array([
     3334624.234,
     3331341.202,
     3331518.378,
-    3325337.344
+    3325337.344 
 ])
 
 
@@ -200,7 +251,8 @@ T2_sclrate_per_I = np.array([
 T2_sclrate_per_I_norm = T2_sclrate_per_I / 3448.005
 
 # SHMS EL_CLEAN (done from interactive raw ROOTfile (SHMS EL CLEAN Counts / uC)
-SHMS_EL_CLEAN_per_I = np.array([2814,
+SHMS_EL_CLEAN_per_I = np.array([
+                       2814,
                        2800,
                        2794,
                        2789,
@@ -218,7 +270,7 @@ SHMS_EL_CLEAN_per_I = np.array([2814,
                        2750,
                        2746,
                        2744,
-                       2739
+                       2739 
 ])
 
 # normalize el-clean
@@ -267,15 +319,6 @@ plt.show()
 
 
 
-
-
-
-
-
-
-
-
-'''
 fig, (ax1, ax2, ax3) = plt.subplots(3)
 fig.suptitle('Ca-48 H-Contamination Study', fontsize=15)
 
