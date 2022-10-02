@@ -18,6 +18,8 @@ region2_cnts = df_data['region2_counts']
 R = region1_cnts / region2_cnts  # contamination fraction
 R_rel = R / R[0]  # contamination relative to 1st Ca-48 MF run
 
+print(R)
+print(R_rel)
 fig0, (ax1, ax2) = plt.subplots(2)
 ax1.set_title('Relative H-contamination to 1st Ca-48 MF run')
 ax1.plot(run[:2], R_rel[:2], marker='o', color='blue', markersize=7, linestyle='None', label='MF')
@@ -38,16 +40,13 @@ ax2.grid()
 ax1.set_ylim([0.75, 1.1])
 ax2.set_ylim([25, 65])
 
-plt.plot()
-plt.show()
+#plt.plot()
+#plt.show()
 
 
 
 #read scaler csv file
 df_scaler = pd.read_csv("ca48_scaler.csv")
-
-
-
 
 
 '''

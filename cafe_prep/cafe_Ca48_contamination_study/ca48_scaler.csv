@@ -1,4 +1,4 @@
-run,kin,sclrate_per_I_elreal,sclrate_per_I_elclean,sclcnts_per_mC_elreal,avg_I
+run,kin,sclrate_per_I_elreal,sclrate_per_I_elclean,sclcnts_per_mC_elreal,I_avg
 16978,MF,3315.289,2675,3268398.019,27.489
 16979,MF,3329.997,2684,3283021.608,27.972
 17036,SRC,3448.005,2814,3400973.643,51.922
