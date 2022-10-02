@@ -32,35 +32,36 @@ R2_rel_err = R2_err / R2[0]
 
 #print(R)
 print('R_rel_err = ', R_rel_err)
-
-fig0, (ax1, ax2) = plt.subplots(2)
+print('R2_rel_err = ', R2_rel_err) 
+#fig0, (ax1, ax2) = plt.subplots(2)
+fig0, (ax1) = plt.subplots(1)
 ax1.set_title('Relative H-contamination to 1st Ca-48 MF run', fontsize=16, fontweight='bold')
-ax1.errorbar(run[:2], R_rel[:2], R_rel_err[:2], marker='o', color='blue', markersize=5, linestyle='None', label='Ca48 MF')
-ax1.errorbar(run[2:], R_rel[2:], R_rel_err[2:], marker='o', color='green', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
+ax1.errorbar(run[:2], R_rel[:2], R_rel_err[:2], marker='o', color='blue', markersize=7, linestyle='None', label='method1: Ca48 MF')
+ax1.errorbar(run[2:], R_rel[2:], R_rel_err[2:], marker='o', color='green', markersize=7, linestyle='None', label='method1: Ca48 MF (round 2)')
 
-ax1.errorbar(run[:2], R2_rel[:2], R2_rel_err[:2], marker='^', markerfacecolor='None', color='blue', markersize=5, linestyle='None', label='Ca48 MF')
-ax1.errorbar(run[2:], R2_rel[2:], R2_rel_err[2:], marker='^', markerfacecolor='None', color='green', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
+ax1.errorbar(run[:2]+7, R2_rel[:2], R2_rel_err[:2], marker='^', markerfacecolor='white', color='blue', markersize=7, linestyle='None', label='method2: Ca48 MF')
+ax1.errorbar(run[2:]+7, R2_rel[2:], R2_rel_err[2:], marker='^', markerfacecolor='white', color='green', markersize=7, linestyle='None', label='method2: Ca48 MF (round 2)')
 
 
 ax1.set_ylabel('Relative H-contamination', fontsize=16) 
 ax1.tick_params(axis='both', which='both', labelsize=15) 
-ax1.set_xticklabels([])
-#ax1.set_xlabel('Run Number', fontsize=16)
+#ax1.set_xticklabels([])
+ax1.set_xlabel('Run Number', fontsize=16)
 ax1.legend(loc='upper right', fontsize=12)
 ax1.grid()
 
-ax2.set_title('Beam Current', fontsize=16, fontweight='bold')
-ax2.plot(run[:2], I_avg[:2], marker='o', color='blue', markersize=5, linestyle='None', label='Ca48 MF')
-ax2.plot(run[2:], I_avg[2:], marker='o', color='green', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
-ax2.set_ylabel('Averge Beam Current [uA]', fontsize=16)
-ax2.tick_params(axis='both', which='both', labelsize=15)
-ax2.set_xlabel('Run Number', fontsize=16)
-ax2.legend(loc='upper left', fontsize=12)
-ax2.grid()
+#ax2.set_title('Beam Current', fontsize=16, fontweight='bold')
+#ax2.plot(run[:2], I_avg[:2], marker='o', color='blue', markersize=5, linestyle='None', label='Ca48 MF')
+#ax2.plot(run[2:], I_avg[2:], marker='o', color='green', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
+#ax2.set_ylabel('Averge Beam Current [uA]', fontsize=16)
+#ax2.tick_params(axis='both', which='both', labelsize=15)
+#ax2.set_xlabel('Run Number', fontsize=16)
+#ax2.legend(loc='upper left', fontsize=12)
+#ax2.grid()
 
 
 ax1.set_ylim([0., 1.1])
-ax2.set_ylim([25, 65])
+#ax2.set_ylim([25, 65])
 
 plt.plot()
 plt.show()
