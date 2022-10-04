@@ -1,0 +1,1 @@
+slope = 39897.5 intercept = -1946.64
