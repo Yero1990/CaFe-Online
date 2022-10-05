@@ -2,3 +2,7 @@ run 17043 start_of_run =  2022-09-22 10:09:54        -->                        
           end_of_run =  2022-09-22 10:32:14                                                         end_of_run =  2022-09-22 13:20:21  
 
 These runs, 17043, 17044, 17045, 17046
+
+
+What happened during these runs that caused a drop (17043) and then gradual
+increase in the T2 scaler counts per unit charge ??
