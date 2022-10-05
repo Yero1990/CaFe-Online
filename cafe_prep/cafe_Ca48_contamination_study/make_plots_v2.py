@@ -26,7 +26,8 @@ bcm2_charge_new = df_scaler['q_bcm2_new']
 bcm4a_charge_new = df_scaler['q_bcm4a_new']
 bcm4b_charge_new = df_scaler['q_bcm4b_new']
 bcm4c_charge_new = df_scaler['q_bcm4c_new']
-I_bcm4a_avg_new  = df_scaler['I_bcm4a_avg_new']
+I_bcm4a_avg_new  = df_scaler['I_avg_new']
+
 
 # calculate T2 scaler counts per charge (fall 2021 bcm calib)
 T2_per_mC_bcm1 = T2_scaler / bcm1_charge
@@ -54,9 +55,10 @@ ax1.set_title('Charge-normalized T2 Scaler Counts Relative to 1st SRC Run', font
 ax1.plot(run[:2],   T2_per_mC_bcm4a_norm[:2], marker='o', color='blue', markersize=5, linestyle='None', label='Ca48 MF')
 ax1.plot(run[2:23], T2_per_mC_bcm4a_norm[2:23], marker='o', color='red', markersize=5, linestyle='None', label='Ca48 SRC')
 ax1.plot(run[23:],  T2_per_mC_bcm4a_norm[23:], marker='o', color='green', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
-ax1.plot(run[:2],   T2_per_mC_bcm4a_norm_new[:2], marker='^', color='blue', markersize=5, linestyle='None', label='Ca48 MF (bcm_calib22)')
-ax1.plot(run[2:23], T2_per_mC_bcm4a_norm_new[2:23], marker='^', color='red', markersize=5, linestyle='None', label='Ca48 SRC')
-ax1.plot(run[23:],  T2_per_mC_bcm4a_norm_new[23:], marker='^', color='green', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
+
+ax1.plot(run[:2]+7,   T2_per_mC_bcm4a_norm_new[:2], marker='^', color='blue', markerfacecolor='white', markersize=5, linestyle='None', label='Ca48 MF (bcm_calib22)')
+ax1.plot(run[2:23]+7, T2_per_mC_bcm4a_norm_new[2:23], marker='^', color='red', markerfacecolor='white', markersize=5, linestyle='None', label='Ca48 SRC')
+ax1.plot(run[23:]+7,  T2_per_mC_bcm4a_norm_new[23:], marker='^', color='green', markerfacecolor='white', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
 ax1.set_ylim([0.9, 1.05])
 ax1.set_xticklabels([])
 ax1.grid()
@@ -70,9 +72,9 @@ ax2.plot(run[:2],   I_bcm4a_avg[:2], marker='o', color='blue', markersize=5, lin
 ax2.plot(run[2:23], I_bcm4a_avg[2:23], marker='o', color='red', markersize=5, linestyle='None', label='Ca48 SRC')
 ax2.plot(run[23:],  I_bcm4a_avg[23:], marker='o', color='green', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
 
-ax2.plot(run[:2],   I_bcm4a_avg_new[:2], marker='^', color='blue', markersize=5, linestyle='None', label='Ca48 MF (bcm_calib22)')
-ax2.plot(run[2:23], I_bcm4a_avg_new[2:23], marker='^', color='red', markersize=5, linestyle='None', label='Ca48 SRC ')
-ax2.plot(run[23:],  I_bcm4a_avg_new[23:], marker='^', color='green', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
+ax2.plot(run[:2]+7,   I_bcm4a_avg_new[:2], marker='^', color='blue', markerfacecolor='white',   markersize=5, linestyle='None', label='Ca48 MF (bcm_calib22)')
+ax2.plot(run[2:23]+7, I_bcm4a_avg_new[2:23], marker='^', color='red', markerfacecolor='white',  markersize=5, linestyle='None', label='Ca48 SRC ')
+ax2.plot(run[23:]+7,  I_bcm4a_avg_new[23:], marker='^', color='green', markerfacecolor='white', markersize=5, linestyle='None', label='Ca48 MF (round 2)')
 
 ax2.set_ylim([25, 65])
 ax2.grid()
@@ -82,4 +84,3 @@ ax2.tick_params(axis='both', which='both', labelsize=15)
 ax2.set_xlabel('Run Number', fontsize=16)
 
 plt.show()
-

@@ -1,4 +1,4 @@
-run,kin,T2_scaler,q_bcm1,q_bcm2,q_bcm4a,q_bcm4b,q_bcm4c,I_bcm4a_avg,T2_scaler_new,q_bcm1_new,q_bcm2_new,q_bcm4a_new,q_bcm4b_new,q_bcm4c_new,I_bcm4a_avg_new  
+run,kin,T2_scaler,q_bcm1,q_bcm2,q_bcm4a,q_bcm4b,q_bcm4c,I_bcm4a_avg,T2_scaler_new,q_bcm1_new,q_bcm2_new,q_bcm4a_new,q_bcm4b_new,q_bcm4c_new,I_avg_new
 16978, MF,  17927187.,    -3.279,   5.432,    5.485,   27.799,  6.112,   27.489,  17899453.,  5.465,   5.457,   5.435,   4.625,   5.448,   27.527
 16979, MF,  250242873.,	  -43.301,  75.657,   76.223,  386.687,	84.854,  27.972,  250056458., 76.181,  76.068, 	75.615,  64.386,  75.700,  27.872
 17036, SRC, 401593715.,	  18.625,   116.975,  118.087, 317.381,	131.527, 52.481,  401471731., 117.774, 117.990,	117.391, 52.857,  117.549, 52.359
