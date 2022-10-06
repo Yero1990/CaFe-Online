@@ -1,0 +1,27 @@
+
+
+for all ca48 MF runs: 
+---------------------
+* apply tighter cuts to compare counts: abs(emiss) <0.02 && pmiss <0.03
+
+T->Draw("P.kin.primary.W>>W_16979_nocut(100, 0.5,1.5)")
+T->Draw("P.kin.primary.W>>W_17094_region1_cut1(100, 0.5,1.5)", "abs(H.kin.secondary.emiss_nuc)<0.03&&H.kin.secondary.pmiss<0.04")
+T->Draw("P.kin.primary.W>>W_17094_region1_cut2(100, 0.5,1.5)", "abs(H.kin.secondary.emiss_nuc)<0.02&&H.kin.secondary.pmiss<0.03", "sames")
+T->Draw("P.kin.primary.W>>W_16979_region2_cut1(100, 0.5,1.5)", "H.kin.secondary.emiss_nuc>0.&&H.kin.secondary.emiss_nuc<0.05&&H.kin.secondary.pmiss>0.07&&H.kin.secondary.pmiss<0.220")
+
+ONLY for the highest statistics run 16979:
+--------------------------------------------
+*plot emiss with cuts:
+1) Pm < 0.04
+2)Pm<0.03
+
+-> fit a gaussian to the emiss < 0
+
+
+
+H-radiative correction 
+* from SIMC, estimate R = yield_norad / yield_rad
+  using W_norad/W_rad and (Emiss_v_Pmiss_norad / Emiss_v_Pmiss_rad)
+
+*The ratio can be multiplied by the corresponding data distributions (W_data, Emiss_v_Pmiss_data)
+  to correct for radiative effects
