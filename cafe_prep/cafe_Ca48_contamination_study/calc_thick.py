@@ -55,7 +55,7 @@ Na = 6.0221408e23        # Avogadro's number
 Ca48_thick = 1.051       # Ca48 target thickness [g/cm2] from D. Meekins
 
 # atoms / cm^2
-nx = N_data / ((Q_data*0.001/e)*dsig_dom*omega)   # areal density of target (quantiy we are trying to extract)
+nx = N_data / ((Q_data*0.001/e)*dsig_dom*omega)   # areal density of target (quantiy we are trying to extract from data)
 
 # H- thick [g/cm^2]
 H_thick = nx * Hmol / Na
@@ -67,10 +67,10 @@ H_thick_corr =  H_thick *   ( N_data / (Q_data) ) / N_simc
 # assuming Olive Oil: C88_H164_O10
 
 # C- thick [g/cm^2]
-C_thick = H_thick_corr * (Cmol/Hmol) * 88.*12/164.  # do we also scale by number of nucleons ( i.e., 88 atoms * 12 nucleons/atom)
+C_thick = H_thick_corr * (Cmol/Hmol) * 88./164.  # do we also scale by number of nucleons ( i.e., 88 atoms * 12 nucleons/atom)
 
 # O- thick [g/cm^2]
-O_thick = H_thick_corr * (Omol/Hmol) * 10.*16/164.  # do we also scale by number of nucleons ( i.e., 10 atoms * 16 nucleons/atom)
+O_thick = H_thick_corr * (Omol/Hmol) * 10./164.  # do we also scale by number of nucleons ( i.e., 10 atoms * 16 nucleons/atom)
 
 # relative fraction of H thickness to Ca48 thickness
 H_thick_rel = H_thick / Ca48_thick  * 100.
