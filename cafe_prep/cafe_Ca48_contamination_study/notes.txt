@@ -1,0 +1,23 @@
+Ca48 Contaminatio Studies To-do list (Oct 11, 2022)
+
+1) Fit the T2 scalers / mC  vs. total charge for Ib > 50 uA @ CaFe SRC region
+using  fit(Q) = Ae^{-alpha. * Q},  where A, alpha are constants to be determined from fit
+
+2) Include the oxyegn in the H-contamination calculations as well (use all nucleons)
+Olive Oil: C88_H164_O10,   [ (88 Carbon Atoms * 12 nucleons / atom) + (10 Oxygen Atoms * 16 nucleons/atom) ] / (164 H atoms * 1 nucleon/atom)
+
+3) Use the SIMC results of contamination as official, and use our Ca48 data as cross check
+e.g.  a) use calculated H-thickness (g/cm2) from data as input to SIMC
+      b) estimate yield Y_simc = Counts/mC from SIMC and compare with Y_data = Counts/mC from Ca48 MF data
+      c) Scale the H-thickness (g/cm^2) x Y_simc / Y_data to account for data discrepancy
+      (still need to check if  ratio of thickness equals ratio of yields in SIMC)
+
+4) parametrize T2 scalers/mC for the middle 6 SRC Ca48 runs (where we observe current dependency) as well
+as the last 3 Ca48 MF runs.  To do this,  plot T2 scalers/mC vs. beam current and find a functional form
+that describes current dependency.  Ca48 SRC Runs are: 17043, 17044, 17045, 17046, 17047, 17048
+Ca48 MF runs are: 17093, 17094, 17096
+
+5) Note other ideas discussed in today's meeting (just as backup, if we wanted to try it later) for checking T2 scalers dependecy with beam current
+- check beam positions, rasters 
+- plot ratio of T1 scalers (SHMS 3/4) / T2 scalers (SHMS EL-REAL)
+- check if there were any sources of additional background during these runs, or how to remove sources of background from scalers
