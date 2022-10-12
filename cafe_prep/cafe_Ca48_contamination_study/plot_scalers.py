@@ -3,9 +3,14 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import csv
 import pandas as pd
+from matplotlib import rc
+
+rc('text', usetex=True)
 
 #df_scaler = pd.read_csv("ca48_report_files/fall2021_bcm/ca48_bcmFall2021.csv")
 df_scaler = pd.read_csv("ca48_scaler_report_files/ca48_bcmInfo.csv")
+
+plt.rcParams["font.family"] = "Times New Roman"
 
 
 run = df_scaler['run']
@@ -142,29 +147,43 @@ T2_scl_per_mC_src = list(T2_per_mC_bcm4a_norm_new[2:8]) + list(T2_per_mC_bcm4a_n
 Q_src = list(bcm4a_charge_new[2:8]) +  list(bcm4a_charge_new[12:23])
 Q_csum_src = np.cumsum(Q_src)
 
-print(run_src)
-print(Q_src)
-print(min(Q_csum_src), max(Q_csum_src))
+T2_scl_per_mC_src = np.array(T2_scl_per_mC_src)
+Q_csum_src = np.array(Q_csum_src)
+print('x=',Q_csum_src)
+print('y=',T2_scl_per_mC_src)
 
+# define exponential-fit function with parameters (a,b)
+def func(x, a, b, c):
+    return a * np.exp(-b * x) + c
 
-# fit T2 scaler vs Q data
+# fit the data
+popt, pcov = curve_fit(func, Q_csum_src,  T2_scl_per_mC_src, p0=[1, 1e-05, 200])
+
+print('a = ', popt[0])
+print('b = ', popt[1])
+print('c = ', popt[2])
+
+print(pcov)
+
+# error in parameters is squareroot of diagonal elements of covariant matrix (diagonal elements -> variances (sig^2))
+# off diagonal element represents correlations errors
+p_sigma = np.sqrt(np.diag(pcov))
+
+print(p_sigma)
+
+# plot data 
 fig0, (ax1) = plt.subplots(1)
 ax1.set_title('Charge-normalized T2 Scaler Counts Relative to 1st SRC Run', fontsize=16, fontweight='bold')
-ax1.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label='Ca48 SRC')
+ax1.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 SRC data ($I_{b} > 50 \mu$A')
 ax1.set_ylim([0.96, 1.02])
 ax1.grid()
 ax1.legend(loc='upper left',fontsize=12)
 ax1.set_ylabel('Relative T2 scalers/mC', fontsize=16)
-ax1.set_ylabel('Cumulative Charge Q [mC]', fontsize=16)
+ax1.set_xlabel('Cumulative Charge Q [mC]', fontsize=16)
 ax1.tick_params(axis='both', which='both', labelsize=15)
-
-def func(x, a, b):
-    return a * np.exp(-b * x)
-
-popt, pcov = curve_fit(func, Q_csum_src,  T2_scl_per_mC_src, p0=[1, 0.0001], bounds=(-np.inf, np.inf))
-
-ax1.plot(Q_csum_src, func(Q_csum_src, *popt), 'r-', label='fit: ' )
-ax1.legend(loc='upper left',fontsize=12)
+# plot fit curve 
+ax1.plot(Q_csum_src, func(Q_csum_src, *popt), 'r-', label=r"fit: $A e^{-\alpha Q}$ + C" "\n" "A = %.3E $\pm$ %.3E" "\n" r"$\alpha$ = %.3E $\pm$ %.3E" "\n" "C = %.3E $\pm$ %.3E" % (popt[0], p_sigma[0], popt[1], p_sigma[1], popt[2], p_sigma[2]) )
+ax1.legend(loc='upper left',fontsize=15)
 
 plt.show()
 
