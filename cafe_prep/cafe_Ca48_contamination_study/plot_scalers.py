@@ -1,10 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
 import csv
 import pandas as pd
 
 #df_scaler = pd.read_csv("ca48_report_files/fall2021_bcm/ca48_bcmFall2021.csv")
-df_scaler = pd.read_csv("ca48_report_files/ca48_bcmInfo.csv")
+df_scaler = pd.read_csv("ca48_scaler_report_files/ca48_bcmInfo.csv")
 
 
 run = df_scaler['run']
@@ -49,6 +50,7 @@ T2_per_mC_bcm4a_norm = T2_per_mC_bcm4a / T2_per_mC_bcm4a[2]
 # normalize T2 by 1st SRC run (summer 2022 bcm calib)
 T2_per_mC_bcm4a_norm_new = T2_per_mC_bcm4a_new / T2_per_mC_bcm4a_new[2]
 
+'''
 # fall 2021 bcm calibrations
 fig0, (ax1, ax2) = plt.subplots(2)
 ax1.set_title('Charge-normalized T2 Scaler Counts Relative to 1st SRC Run', fontsize=16, fontweight='bold')
@@ -100,6 +102,7 @@ ax2.set_ylabel('Averge Beam Current [uA]', fontsize=16)
 ax2.tick_params(axis='both', which='both', labelsize=15)
 ax2.set_xlabel('Run Number', fontsize=16)
 plt.show()
+'''
 
 '''
 # bcm calib sanity check
@@ -131,3 +134,37 @@ ax2.tick_params(axis='both', which='both', labelsize=15)
 ax2.set_xlabel('Run Number', fontsize=16)
 plt.show()
 '''
+
+
+
+run_src = list(run[2:8]) + list(run[12:23])
+T2_scl_per_mC_src = list(T2_per_mC_bcm4a_norm_new[2:8]) + list(T2_per_mC_bcm4a_norm_new[12:23])
+Q_src = list(bcm4a_charge_new[2:8]) +  list(bcm4a_charge_new[12:23])
+Q_csum_src = np.cumsum(Q_src)
+
+print(run_src)
+print(Q_src)
+print(min(Q_csum_src), max(Q_csum_src))
+
+
+# fit T2 scaler vs Q data
+fig0, (ax1) = plt.subplots(1)
+ax1.set_title('Charge-normalized T2 Scaler Counts Relative to 1st SRC Run', fontsize=16, fontweight='bold')
+ax1.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label='Ca48 SRC')
+ax1.set_ylim([0.96, 1.02])
+ax1.grid()
+ax1.legend(loc='upper left',fontsize=12)
+ax1.set_ylabel('Relative T2 scalers/mC', fontsize=16)
+ax1.set_ylabel('Cumulative Charge Q [mC]', fontsize=16)
+ax1.tick_params(axis='both', which='both', labelsize=15)
+
+def func(x, a, b):
+    return a * np.exp(-b * x)
+
+popt, pcov = curve_fit(func, Q_csum_src,  T2_scl_per_mC_src, p0=[1, 0.0001], bounds=(-np.inf, np.inf))
+
+ax1.plot(Q_csum_src, func(Q_csum_src, *popt), 'r-', label='fit: ' )
+ax1.legend(loc='upper left',fontsize=12)
+
+plt.show()
+
