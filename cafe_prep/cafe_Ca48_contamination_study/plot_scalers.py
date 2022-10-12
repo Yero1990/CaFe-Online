@@ -142,6 +142,11 @@ plt.show()
 
 
 
+#-----------------------------------
+# Select Ca48 SRC runs with Ib>50 uA and do exponential fit
+# (parametrize the percentage drop in T2 scalers versus charge)
+#-----------------------------------
+'''
 run_src = list(run[2:8]) + list(run[12:23])
 T2_scl_per_mC_src = list(T2_per_mC_bcm4a_norm_new[2:8]) + list(T2_per_mC_bcm4a_norm_new[12:23])
 Q_src = list(bcm4a_charge_new[2:8]) +  list(bcm4a_charge_new[12:23])
@@ -186,4 +191,52 @@ ax1.plot(Q_csum_src, func(Q_csum_src, *popt), 'r-', label=r"fit: $A e^{-\alpha Q
 ax1.legend(loc='upper left',fontsize=15)
 
 plt.show()
+'''
 
+#-----------------------------------
+# Select Ca48 SRC runs with Ib<50 uA
+# and parametrize the percentage drop
+# in T2 scalers versus current)
+#-----------------------------------
+
+run_src = list(run[8:12])
+T2_scl_per_mC_src = list(T2_per_mC_bcm4a_norm_new[8:12])
+I_bcm4a_avg_src = list(I_bcm4a_avg_new[8:12])
+Q_src = list(bcm4a_charge_new[8:12])
+Q_csum_src = np.cumsum(Q_src)
+
+T2_scl_per_mC_src = np.array(T2_scl_per_mC_src)
+I_bcm4a_avg_src = np.array(I_bcm4a_avg_src)
+Q_csum_src = np.array(Q_csum_src)
+
+print('Q=',Q_csum_src)
+print('T2_scaler=',T2_scl_per_mC_src)
+print('Ib = ', I_bcm4a_avg_src)
+
+fig0, (ax1, ax2) = plt.subplots(2)
+ax1.set_title('Charge-normalized T2 Scaler Counts Relative to 1st SRC Run', fontsize=16, fontweight='bold')
+
+ax1.plot(I_bcm4a_avg_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 SRC data ($I_{b} < 50 \mu$A')
+
+ax1.set_ylim([0.93, 0.98])
+ax1.grid()
+ax1.legend(loc='upper left',fontsize=12)
+ax1.set_ylabel('Relative T2 scalers/mC', fontsize=16)
+ax1.set_xlabel(r'Beam Current [$\mu$A]', fontsize=16)
+
+ax1.tick_params(axis='both', which='both', labelsize=15)
+
+#-----
+
+ax2.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 SRC data ($I_{b} < 50 \mu$A')
+
+ax2.set_ylim([0.93, 0.98])
+ax2.grid()
+ax2.legend(loc='upper left',fontsize=12)
+ax2.set_ylabel('Relative T2 scalers/mC', fontsize=16)
+ax2.set_xlabel(r'Beam Charge [mC]', fontsize=16)
+ax2.tick_params(axis='both', which='both', labelsize=15)
+
+
+
+plt.show()
