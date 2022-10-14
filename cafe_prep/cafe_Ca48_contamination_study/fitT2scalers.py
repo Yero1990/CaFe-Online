@@ -201,10 +201,18 @@ plt.show()
 # (using the 1st 5 runs < 50 uA)
 #-----------------------------------
 
-run_src = list(run[8:13])
-T2_scl_per_mC_src = list(T2_per_mC_bcm4a_norm_new[8:13])
-I_bcm4a_avg_src = list(I_bcm4a_avg_new[8:13])
-Q_src = list(bcm4a_charge_new[8:13])
+# 1st 5 outlier runs
+#run_src = list(run[8:13])
+#T2_scl_per_mC_src = list(T2_per_mC_bcm4a_norm_new[8:13])
+#I_bcm4a_avg_src = list(I_bcm4a_avg_new[8:13])
+#Q_src = list(bcm4a_charge_new[8:13])
+
+#  1st 5 outlier runs + next 2 runs
+run_src = list(run[8:15])
+T2_scl_per_mC_src = list(T2_per_mC_bcm4a_norm_new[8:15])
+I_bcm4a_avg_src = list(I_bcm4a_avg_new[8:15])
+Q_src = list(bcm4a_charge_new[8:15])
+
 Q_csum_src = np.cumsum(Q_src)
 
 T2_scl_per_mC_src = np.array(T2_scl_per_mC_src)
@@ -242,7 +250,6 @@ ax1.plot(I_bcm4a_avg_src, func(I_bcm4a_avg_src, *popt), 'r-', label=r"fit: m$x$ 
 
 ax1.legend(loc='upper left',fontsize=12)
 
-
 #-----
 
 ax2.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 SRC data ($I_{b} < 50 \mu$A')
@@ -259,7 +266,7 @@ plt.show()
 
 
 
-
+'''
 #-----------------------------------
 # Select Ca48 SRC runs with Ib<50 uA
 # and FIT the percentage drop
@@ -324,7 +331,7 @@ ax2.set_xlabel(r'Beam Charge [mC]', fontsize=16)
 ax2.tick_params(axis='both', which='both', labelsize=15)
 
 plt.show()
-
+'''
 
 
 '''
@@ -390,3 +397,114 @@ ax2.tick_params(axis='both', which='both', labelsize=15)
 
 plt.show()
 '''
+
+
+
+
+# With the known slope fromnthe fits (in relative T2/mC per uA), one can correct the
+# runs relative to 55 uA bem current.
+
+# slope was taken to be the average of the three lineaer fits:  m = 1.636e-3, b= 0.897
+# now that the current dependecy is parametrized, we know by how much to correct for beam current
+# T2_corrected = T2 + (1.636e-3 * 55 - 1.636e-3 * 35),    T2 (@ 55 uA): 1.636e-3 * 55,  T2 (@ Ib): 1.636e-3 * Ib
+# the difference between these two, is the correction factor to be added for T2 (@ Ib)
+# T2_corrected = T2 (@ Ib) + ( T2 (@ 55 uA) - T2 (@ Ib) )
+
+
+#-----------------------------------
+# Select Ca48 SRC runs with Ib<50 uA
+# and FIT the percentage drop
+# in T2 scalers versus current) -part1 
+# (using the next two runs at I <~50 and 55 uA)
+# runs 17048, 17049
+#-----------------------------------
+
+run_src = list(run)
+T2_scl_per_mC_src = list(T2_per_mC_bcm4a_norm_new)
+I_bcm4a_avg_src = list(I_bcm4a_avg_new)
+Q_src = list(bcm4a_charge_new)
+Q_csum_src = np.cumsum(Q_src)
+
+T2_scl_per_mC_src = np.array(T2_scl_per_mC_src)
+I_bcm4a_avg_src = np.array(I_bcm4a_avg_src)
+Q_csum_src = np.array(Q_csum_src)
+
+# Apply a correction factor to up-scale data to 55 uA beam current
+m_slope = 1.6366e-3  #  average slope of 3 fits
+
+m_slope1 = 1.712e-3  # slope of 1st 7 outlier runs
+m_slope2 = 1.573e-3  # slope of 3 last Ca48 MF runs
+
+T2_scl_per_mC_src_corr1 = T2_scl_per_mC_src[:-3] + (m_slope1*55. - m_slope*I_bcm4a_avg_src[:-3])  # select all but last 3 runs (to apply correction 1)
+T2_scl_per_mC_src_corr2 = T2_scl_per_mC_src[-3:] + (m_slope2*55. - m_slope*I_bcm4a_avg_src[-3:])  # select only the last 3 runs (to apply correction 2)
+
+#print('Q=',Q_csum_src)
+print('T2_scaler=',T2_scl_per_mC_src)
+#print('T2_scaler_corr=',T2_scl_per_mC_src_corr)
+
+print('Ib = ', I_bcm4a_avg_src)
+Ib_corr  = [55] * len(I_bcm4a_avg_src)
+
+# define line fit
+#def func(x, A, B, C):
+#    return A * np.exp(-B*x) + C
+
+# fit the data
+#popt, pcov = curve_fit(func, Q_csum_src, T2_scl_per_mC_src, p0=[0.5, 1, 1])
+#p_sigma = np.sqrt(np.diag(pcov))
+
+#print('pcov=',pcov)
+
+
+fig0, (ax1) = plt.subplots(1)
+ax1.set_title('Charge-normalized T2 Scaler Counts Relative to 1st SRC Run', fontsize=16, fontweight='bold')
+
+# beam current vs. run
+ax1.plot(run, I_bcm4a_avg_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
+ax1.plot(run[:-3], Ib_corr[:-3], marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
+ax1.plot(run[-3:], Ib_corr[-3:], marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(onlt last 3 runs)')
+
+# T2 scaler/mC vs. run
+#ax1.plot(run, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
+#ax1.plot(run[:-3], T2_scl_per_mC_src_corr1, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
+#ax1.plot(run[-3:], T2_scl_per_mC_src_corr2, marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(onlt last 3 runs)')
+
+#T2 scaler/mC vs. cumulative charge
+#ax1.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
+#ax1.plot(Q_csum_src[:-3], T2_scl_per_mC_src_corr1, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
+#ax1.plot(Q_csum_src[-3:], T2_scl_per_mC_src_corr2, marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(onlt last 3 runs)')
+
+
+#ax1.set_ylim([0.93, 1.02])
+ax1.set_ylim([25, 65])
+
+ax1.grid()
+#ax1.set_ylabel('Relative T2 scalers/mC', fontsize=16)
+ax1.set_ylabel('Average Beam Current [uA]', fontsize=16)
+
+#ax1.set_xlabel(r'Cumulative Charge [mC]', fontsize=16)
+#ax1.set_xlabel(r'Beam Current [$\mu$A]', fontsize=16)
+ax1.set_xlabel(r'Run Number', fontsize=16)
+
+ax1.tick_params(axis='both', which='both', labelsize=15)
+
+
+# plot fit curve 
+#ax1.plot(I_bcm4a_avg_src, func(I_bcm4a_avg_src, *popt), 'r-', label=r"fit: m$x$ + b" "\n" "m = %.3E $\pm$ %.3E" "\n" "b = %.3E $\pm$ %.3E" % (popt[0], p_sigma[0], popt[1], p_sigma[1]) )
+
+ax1.legend(loc='upper left',fontsize=12)
+
+
+#-----
+
+#ax2.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 SRC data ($I_{b} ~ 50, 55) \mu$A')
+
+#ax2.set_ylim([0.93, 1.02])
+#ax2.grid()
+#ax2.legend(loc='upper left',fontsize=12)
+#ax2.set_ylabel('Relative T2 scalers/mC', fontsize=16)
+#ax2.set_xlabel(r'Beam Charge [mC]', fontsize=16)
+#ax2.tick_params(axis='both', which='both', labelsize=15)
+
+plt.show()
+
