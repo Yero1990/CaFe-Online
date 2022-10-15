@@ -430,13 +430,46 @@ I_bcm4a_avg_src = np.array(I_bcm4a_avg_src)
 Q_csum_src = np.array(Q_csum_src)
 
 # Apply a correction factor to up-scale data to 55 uA beam current
-m_slope = 1.6366e-3  #  average slope of 3 fits
-
 m_slope1 = 1.712e-3  # slope of 1st 7 outlier runs
-m_slope2 = 1.573e-3  # slope of 3 last Ca48 MF runs
+m_slope1_err = 1.120e-4
 
-T2_scl_per_mC_src_corr1 = T2_scl_per_mC_src[:-3] + (m_slope1*55. - m_slope*I_bcm4a_avg_src[:-3])  # select all but last 3 runs (to apply correction 1)
-T2_scl_per_mC_src_corr2 = T2_scl_per_mC_src[-3:] + (m_slope2*55. - m_slope*I_bcm4a_avg_src[-3:])  # select only the last 3 runs (to apply correction 2)
+m_slope2 = 1.573e-3  # slope of 3 last Ca48 MF runs
+m_slope2_err = 2.572e-6
+
+# calculate weighted average
+w1 = 1./m_slope1_err**2
+w2 = 1./m_slope2_err**2
+
+m_slope_avg = (m_slope1*w1 + m_slope2*w2)/(w1+w2)
+m_slope_avg_err = 1./np.sqrt(w1 + w2)
+
+# calculate un-weighted average
+m_slope_avg_uw = (m_slope1 + m_slope2)/2.
+m_slope_avg_uw_err = np.sqrt(0.5 * (m_slope1_err**2 + m_slope2_err))
+
+#print(m_slope_avg )
+#print(m_slope_avg_err )
+
+print('unweighted avg slope = ', m_slope_avg_uw )
+print('unweighted avg slope err =', m_slope_avg_uw_err )
+
+
+
+# calculating corrections using separate slopes
+T2_scl_per_mC_src_corr1 = T2_scl_per_mC_src[:-3] + (m_slope1*55. - m_slope1*I_bcm4a_avg_src[:-3])  # select all but last 3 runs (to apply correction 1)
+T2_scl_per_mC_src_corr2 = T2_scl_per_mC_src[-3:] + (m_slope2*55. - m_slope2*I_bcm4a_avg_src[-3:])  # select only the last 3 runs (to apply correction 2)
+
+T2_scl_per_mC_src_corr1_err = np.sqrt( (55-I_bcm4a_avg_src[:-3]) * m_slope1_err**2 )
+T2_scl_per_mC_src_corr2_err = np.sqrt( (55-I_bcm4a_avg_src[-3:]) * m_slope2_err**2 )
+
+# calculating corrections using the average of the slopes
+T2_scl_per_mC_src_corr_avg = T2_scl_per_mC_src + (m_slope_avg*55. - m_slope_avg*I_bcm4a_avg_src)  
+T2_scl_per_mC_src_corr_avg_err = np.sqrt( (55-I_bcm4a_avg_src) * m_slope_avg_err**2 )
+
+# calculating corrections using the average of the slopes (unweighted)
+T2_scl_per_mC_src_corr_uw_avg = T2_scl_per_mC_src + (m_slope_avg_uw*55. - m_slope_avg_uw*I_bcm4a_avg_src)  
+T2_scl_per_mC_src_corr_uw_avg_err = np.sqrt( (55-I_bcm4a_avg_src) * m_slope_avg_uw_err**2 )
+  
 
 #print('Q=',Q_csum_src)
 print('T2_scaler=',T2_scl_per_mC_src)
@@ -460,31 +493,33 @@ fig0, (ax1) = plt.subplots(1)
 ax1.set_title('Charge-normalized T2 Scaler Counts Relative to 1st SRC Run', fontsize=16, fontweight='bold')
 
 # beam current vs. run
-ax1.plot(run, I_bcm4a_avg_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
-ax1.plot(run[:-3], Ib_corr[:-3], marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
-ax1.plot(run[-3:], Ib_corr[-3:], marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(onlt last 3 runs)')
+#ax1.plot(run, I_bcm4a_avg_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
+#ax1.plot(run[:-3], Ib_corr[:-3], marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
+#ax1.plot(run[-3:], Ib_corr[-3:], marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(only last 3 runs)')
 
 # T2 scaler/mC vs. run
 #ax1.plot(run, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
 #ax1.plot(run[:-3], T2_scl_per_mC_src_corr1, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
-#ax1.plot(run[-3:], T2_scl_per_mC_src_corr2, marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(onlt last 3 runs)')
+#ax1.plot(run[-3:], T2_scl_per_mC_src_corr2, marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(only last 3 runs)')
 
 #T2 scaler/mC vs. cumulative charge
-#ax1.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
-#ax1.plot(Q_csum_src[:-3], T2_scl_per_mC_src_corr1, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
-#ax1.plot(Q_csum_src[-3:], T2_scl_per_mC_src_corr2, marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(onlt last 3 runs)')
+ax1.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
+#ax1.errorbar(Q_csum_src[:-3], T2_scl_per_mC_src_corr1, T2_scl_per_mC_src_corr1_err, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
+#ax1.errorbar(Q_csum_src[-3:], T2_scl_per_mC_src_corr2, T2_scl_per_mC_src_corr2_err, marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(only last 3 runs)')
+ax1.errorbar(Q_csum_src, T2_scl_per_mC_src_corr_avg, T2_scl_per_mC_src_corr_avg_err, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(weighted avg. of slopes)')
+ax1.errorbar(Q_csum_src, T2_scl_per_mC_src_corr_uw_avg, T2_scl_per_mC_src_corr_uw_avg_err, marker='^', color='blue', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(un-weighted avg. of slopes)')
 
 
-#ax1.set_ylim([0.93, 1.02])
-ax1.set_ylim([25, 65])
+ax1.set_ylim([0.93, 1.02])
+#ax1.set_ylim([25, 65])
 
 ax1.grid()
-#ax1.set_ylabel('Relative T2 scalers/mC', fontsize=16)
-ax1.set_ylabel('Average Beam Current [uA]', fontsize=16)
+ax1.set_ylabel('Relative T2 scalers/mC', fontsize=16)
+#ax1.set_ylabel('Average Beam Current [uA]', fontsize=16)
 
-#ax1.set_xlabel(r'Cumulative Charge [mC]', fontsize=16)
+ax1.set_xlabel(r'Cumulative Charge [mC]', fontsize=16)
 #ax1.set_xlabel(r'Beam Current [$\mu$A]', fontsize=16)
-ax1.set_xlabel(r'Run Number', fontsize=16)
+#ax1.set_xlabel(r'Run Number', fontsize=16)
 
 ax1.tick_params(axis='both', which='both', labelsize=15)
 
@@ -492,7 +527,7 @@ ax1.tick_params(axis='both', which='both', labelsize=15)
 # plot fit curve 
 #ax1.plot(I_bcm4a_avg_src, func(I_bcm4a_avg_src, *popt), 'r-', label=r"fit: m$x$ + b" "\n" "m = %.3E $\pm$ %.3E" "\n" "b = %.3E $\pm$ %.3E" % (popt[0], p_sigma[0], popt[1], p_sigma[1]) )
 
-ax1.legend(loc='upper left',fontsize=12)
+ax1.legend(loc='upper right',fontsize=12)
 
 
 #-----
@@ -507,4 +542,3 @@ ax1.legend(loc='upper left',fontsize=12)
 #ax2.tick_params(axis='both', which='both', labelsize=15)
 
 plt.show()
-
