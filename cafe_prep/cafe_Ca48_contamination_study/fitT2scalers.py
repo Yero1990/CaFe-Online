@@ -459,16 +459,23 @@ print('unweighted avg slope err =', m_slope_avg_uw_err )
 T2_scl_per_mC_src_corr1 = T2_scl_per_mC_src[:-3] + (m_slope1*55. - m_slope1*I_bcm4a_avg_src[:-3])  # select all but last 3 runs (to apply correction 1)
 T2_scl_per_mC_src_corr2 = T2_scl_per_mC_src[-3:] + (m_slope2*55. - m_slope2*I_bcm4a_avg_src[-3:])  # select only the last 3 runs (to apply correction 2)
 
-T2_scl_per_mC_src_corr1_err = np.sqrt( (55-I_bcm4a_avg_src[:-3]) * m_slope1_err**2 )
-T2_scl_per_mC_src_corr2_err = np.sqrt( (55-I_bcm4a_avg_src[-3:]) * m_slope2_err**2 )
+T2_scl_per_mC_src_corr1_err = np.sqrt( np.abs(55-I_bcm4a_avg_src[:-3]) * m_slope1_err**2 )
+T2_scl_per_mC_src_corr2_err = np.sqrt( np.abs(55-I_bcm4a_avg_src[-3:]) * m_slope2_err**2 )
+
+T2_scl_corr = list(T2_scl_per_mC_src_corr1) + list(T2_scl_per_mC_src_corr2)
+T2_scl_corr_err = list(T2_scl_per_mC_src_corr1_err) + list(T2_scl_per_mC_src_corr2_err)
+
+print('T2_scl_per_mC_src_corr1 =',T2_scl_per_mC_src_corr1 )
+print('T2_scl_per_mC_src_corr2 =',T2_scl_per_mC_src_corr2 )
+print('T2_scl_corr =',T2_scl_corr )
 
 # calculating corrections using the average of the slopes
 T2_scl_per_mC_src_corr_avg = T2_scl_per_mC_src + (m_slope_avg*55. - m_slope_avg*I_bcm4a_avg_src)  
-T2_scl_per_mC_src_corr_avg_err = np.sqrt( (55-I_bcm4a_avg_src) * m_slope_avg_err**2 )
+T2_scl_per_mC_src_corr_avg_err = np.sqrt( np.abs(55-I_bcm4a_avg_src) * m_slope_avg_err**2 )
 
 # calculating corrections using the average of the slopes (unweighted)
 T2_scl_per_mC_src_corr_uw_avg = T2_scl_per_mC_src + (m_slope_avg_uw*55. - m_slope_avg_uw*I_bcm4a_avg_src)  
-T2_scl_per_mC_src_corr_uw_avg_err = np.sqrt( (55-I_bcm4a_avg_src) * m_slope_avg_uw_err**2 )
+T2_scl_per_mC_src_corr_uw_avg_err = np.sqrt( np.abs(55-I_bcm4a_avg_src) * m_slope_avg_uw_err**2 )
   
 
 #print('Q=',Q_csum_src)
@@ -479,14 +486,18 @@ print('Ib = ', I_bcm4a_avg_src)
 Ib_corr  = [55] * len(I_bcm4a_avg_src)
 
 # define line fit
-#def func(x, A, B, C):
-#    return A * np.exp(-B*x) + C
+def func(x, a, b, c):
+    return a * np.exp(-b*x) + c
 
 # fit the data
-#popt, pcov = curve_fit(func, Q_csum_src, T2_scl_per_mC_src, p0=[0.5, 1, 1])
-#p_sigma = np.sqrt(np.diag(pcov))
+#popt, pcov = curve_fit(func, Q_csum_src, T2_scl_per_mC_src, p0=[1, 1e-05, 200])
+#popt, pcov = curve_fit(func, Q_csum_src, T2_scl_corr, p0=[1, 1e-05, 200], sigma=T2_scl_corr_err)
+popt, pcov = curve_fit(func, Q_csum_src[:-3], T2_scl_corr[:-3], p0=[1, 1e-05, 200], sigma=T2_scl_corr_err[:-3])  # exclude 3 last points in fit
 
-#print('pcov=',pcov)
+#popt, pcov = curve_fit(func, Q_csum_src[:-3], T2_scl_per_mC_src_corr_avg[:-3], p0=[1, 1e-05, 200], sigma=T2_scl_per_mC_src_corr_avg_err[:-3])
+#popt, pcov = curve_fit(func, Q_csum_src, T2_scl_per_mC_src_corr_uw_avg, p0=[1, 1e-05, 200], sigma=T2_scl_per_mC_src_corr_uw_avg_err)
+
+p_sigma = np.sqrt(np.diag(pcov))
 
 
 fig0, (ax1) = plt.subplots(1)
@@ -504,13 +515,18 @@ ax1.set_title('Charge-normalized T2 Scaler Counts Relative to 1st SRC Run', font
 
 #T2 scaler/mC vs. cumulative charge
 ax1.plot(Q_csum_src, T2_scl_per_mC_src, marker='^', color='black', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Uncorrected')
-#ax1.errorbar(Q_csum_src[:-3], T2_scl_per_mC_src_corr1, T2_scl_per_mC_src_corr1_err, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
-#ax1.errorbar(Q_csum_src[-3:], T2_scl_per_mC_src_corr2, T2_scl_per_mC_src_corr2_err, marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(only last 3 runs)')
-ax1.errorbar(Q_csum_src, T2_scl_per_mC_src_corr_avg, T2_scl_per_mC_src_corr_avg_err, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(weighted avg. of slopes)')
-ax1.errorbar(Q_csum_src, T2_scl_per_mC_src_corr_uw_avg, T2_scl_per_mC_src_corr_uw_avg_err, marker='^', color='blue', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(un-weighted avg. of slopes)')
+ax1.errorbar(Q_csum_src[:-3], T2_scl_per_mC_src_corr1, T2_scl_per_mC_src_corr1_err, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA')
+ax1.errorbar(Q_csum_src[-3:], T2_scl_per_mC_src_corr2, T2_scl_per_mC_src_corr2_err, marker='^', color='green', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(only last 3 runs)')
+#ax1.errorbar(Q_csum_src, T2_scl_per_mC_src_corr_avg, T2_scl_per_mC_src_corr_avg_err, marker='^', color='red', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(weighted avg. of slopes)')
+#ax1.errorbar(Q_csum_src, T2_scl_per_mC_src_corr_uw_avg, T2_scl_per_mC_src_corr_uw_avg_err, marker='^', color='blue', markerfacecolor='white', markersize=8, linestyle='None', label=r'Ca48 Corrected to 55 uA' '\n' '(un-weighted avg. of slopes)')
+
+# plot fit curve 
+#ax1.plot(I_bcm4a_avg_src, func(I_bcm4a_avg_src, *popt), 'r-', label=r"fit: m$x$ + b" "\n" "m = %.3E $\pm$ %.3E" "\n" "b = %.3E $\pm$ %.3E" % (popt[0], p_sigma[0], popt[1], p_sigma[1]) )
+#ax1.plot(Q_csum_src, func(Q_csum_src, *popt), 'r-', label=r"fit: $A e^{-\alpha Q}$ + C" "\n" "A = %.3E $\pm$ %.3E" "\n" r"$\alpha$ = %.3E $\pm$ %.3E" "\n" "C = %.3E $\pm$ %.3E" % (popt[0], p_sigma[0], popt[1], p_sigma[1], popt[2], p_sigma[2]) )
+ax1.plot(Q_csum_src[:-3], func(Q_csum_src[:-3], *popt), 'r-', label=r"fit: $A e^{-\alpha Q}$ + C" "\n" "A = %.3E $\pm$ %.3E" "\n" r"$\alpha$ = %.3E $\pm$ %.3E" "\n" "C = %.3E $\pm$ %.3E" % (popt[0], p_sigma[0], popt[1], p_sigma[1], popt[2], p_sigma[2]) )
 
 
-ax1.set_ylim([0.93, 1.02])
+ax1.set_ylim([0.93, 1.05])
 #ax1.set_ylim([25, 65])
 
 ax1.grid()
@@ -524,8 +540,6 @@ ax1.set_xlabel(r'Cumulative Charge [mC]', fontsize=16)
 ax1.tick_params(axis='both', which='both', labelsize=15)
 
 
-# plot fit curve 
-#ax1.plot(I_bcm4a_avg_src, func(I_bcm4a_avg_src, *popt), 'r-', label=r"fit: m$x$ + b" "\n" "m = %.3E $\pm$ %.3E" "\n" "b = %.3E $\pm$ %.3E" % (popt[0], p_sigma[0], popt[1], p_sigma[1]) )
 
 ax1.legend(loc='upper right',fontsize=12)
 
