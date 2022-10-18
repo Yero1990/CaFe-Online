@@ -4,9 +4,9 @@ October 11, 2022
 
 Brief: this script uses results from a crude calculation using  measured data and 
 SIMC quantities from Ca48 MF runs to extract the areal thickness from contamination 
-(assuming olive oil) for now Olive Oil: C88_H164_O10, so the areal thickness for each 
-of these elements is calculated separately by scaling from the measured H-contamination
-
+(assuming pure mineral oil) for now, using the alkene components Cn_H_2n+2 (e.g. C15_H32) 
+so the areal thickness for each  of these elements is calculated separately by scaling from 
+the measured H-contamination. Use a lower, upper bound (C15_H32, C50, H102) 
 '''
 
 import sys
@@ -15,6 +15,9 @@ import numpy as np
 #user input (run number)
 run = int(sys.argv[1])
 
+# the N_data counts have been corrected (or scaled up to account for signal lost due to tight cut and
+# radiative effects (Y_nora / Y_rad) intergrated over missing energy (these scale factors may have uncertainties
+# and will need to be accounted for.
 
 N_data=-1  # data counts (integrated W peak with |Emiss|<20 MeV and Pmiss<30 MeV cuts
 N_simc=-1  # charge-normalized SIMC counts (counts / mC)
