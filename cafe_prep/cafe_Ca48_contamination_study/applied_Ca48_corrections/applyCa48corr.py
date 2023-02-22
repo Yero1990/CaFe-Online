@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pandas import DataFrame as pdf
 
-# define exponential function 
+# define exponential function (based on our fit to T2 scalers vs Charge)
 def rel_Cntm_src(Q):
     
     # used to parametrize relative drop
